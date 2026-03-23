@@ -23,6 +23,9 @@ services:
       - grafana_data:/var/lib/grafana
     networks: ["traefik"]
     expose: ["3000"]
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(`monitoring.stunthound.com`)"

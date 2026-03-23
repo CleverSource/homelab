@@ -15,3 +15,6 @@ external_secrets:
 
   PIHOLE_SYNC_PRIMARY: op://Homelab/Pi-hole Sync/primary
   PIHOLE_SYNC_REPLICAS: op://Homelab/Pi-hole Sync/replicas
+
+  GRAFANA_ADMIN_USERNAME: op://Homelab/Grafana Admin/username
+  GRAFANA_ADMIN_PASSWORD: op://Homelab/Grafana Admin/password
