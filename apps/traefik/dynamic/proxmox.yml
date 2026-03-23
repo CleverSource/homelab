@@ -13,5 +13,4 @@ http:
       loadBalancer:
         servers:
           - url: "https://proxmox.apple.local:8006"
-        serversTransport:
-          insecureSkipVerify: true
+        serversTransport: insecureTransport
