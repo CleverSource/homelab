@@ -1,5 +1,6 @@
 services:
   bentopdf:
+    container_name: bentopdf
     restart: unless-stopped
     image: ghcr.io/alam00000/bentopdf:latest
     labels:
@@ -7,6 +8,7 @@ services:
       - "traefik.http.routers.bentopdf.rule=Host(`bentopdf.stunthound.com`)"
       - "traefik.http.routers.bentopdf.entrypoints=websecure"
       - "traefik.http.routers.bentopdf.tls.certresolver=cloudflare"
+      - "traefik.http.routers.bentopdf.service=bentopdf"
       - "traefik.http.services.bentopdf.loadbalancer.server.port=8080"
 
 networks: {}
