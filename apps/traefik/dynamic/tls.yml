@@ -1,0 +1,15 @@
+tls:
+  certificatesResolvers:
+    cloudflare:
+      acme:
+        dnsChallenge:
+          provider: cloudflare
+
+  stores:
+    default:
+      defaultGeneratedCert:
+        resolver: cloudflare
+        domain:
+          main: stunthound.com
+          sans:
+            - "*.stunthound.com"
