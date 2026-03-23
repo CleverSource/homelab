@@ -1,15 +1,16 @@
-glance:
-  image: glanceapp/glance
-  container_name: glance
-  restart: unless-stopped
-  volumes:
-    - ./glance.yml:/app/config/glance.yml:rw
-  networks: ["traefik"]
-  expose:
-    - "8080"
-  labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.glance.rule=Host(`dash.stunthound.com`)"
-    - "traefik.http.routers.glance.entrypoints=websecure"
-    - "traefik.http.routers.glance.tls.certresolver=cloudflare"
-    - "traefik.http.services.glance.loadbalancer.server.port=8080"
+services:
+  glance:
+    image: glanceapp/glance
+    container_name: glance
+    restart: unless-stopped
+    volumes:
+      - ./glance.yml:/app/config/glance.yml:rw
+    networks: ["traefik"]
+    expose:
+      - "8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.glance.rule=Host(`dash.stunthound.com`)"
+      - "traefik.http.routers.glance.entrypoints=websecure"
+      - "traefik.http.routers.glance.tls.certresolver=cloudflare"
+      - "traefik.http.services.glance.loadbalancer.server.port=8080"
