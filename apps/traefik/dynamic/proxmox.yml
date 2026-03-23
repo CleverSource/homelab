@@ -1,0 +1,16 @@
+http:
+  routers:
+    proxmox:
+      rule: "Host(`proxmox.stunthound.com`)"
+      entryPoints:
+        - websecure
+      service: proxmox
+      tls:
+        certResolver: cloudflare
+
+  services:
+    proxmox:
+      loadBalancer:
+        servers:
+          - url: "https://proxmox.apple.local:8006"
+        serversTransport: insecureTransport

@@ -1,0 +1,59 @@
+pages:
+- name: Home
+  width: slim
+  hide-desktop-navigation: true
+  center-vertically: true
+  columns:
+    - size: full
+      widgets:
+        - type: search
+          autofocus: true
+          search-engine: google
+
+        - type: clock
+          hour-format: 12h
+          timezones:
+            - timezone: America/New_York
+              label: New York
+        
+        - type: monitor
+          cache: 1m
+          title: Services
+          sites:
+            - title: Proxmox
+              url: https://proxmox.stunthound.com
+              icon: di:proxmox
+            - title: Router
+              url: https://archer.apple.local
+              icon: di:pfsense
+              allow-insecure: true
+            - title: Dozzle
+              url: https://dozzle.stunthound.com
+              icon: di:dozzle
+            - title: DNS (pi.hole)
+              url: https://pihole.stunthound.com/admin/login
+              icon: di:pi-hole
+            - title: UniFi
+              url: https://unifi.stunthound.com/
+              icon: di:unifi
+            - title: WireGuard VPN
+              url: https://vpn.stunthound.com/
+              icon: di:wireguard
+            - title: File Share
+              url: http://vault.apple.local:9090/
+              icon: di:cockpit
+              allow-insecure: true
+            - title: Monitoring
+              url: https://monitoring.stunthound.com/
+              icon: di:grafana
+            - title: Prometheus
+              url: https://prometheus.stunthound.com/
+              icon: di:prometheus
+
+        - type: monitor
+          cache: 1m
+          title: Applications
+          sites:
+            - title: PDF Editor
+              url: https://bentopdf.stunthound.com/
+              icon: di:bentopdf

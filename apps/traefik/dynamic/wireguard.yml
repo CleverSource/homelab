@@ -1,0 +1,15 @@
+http:
+  routers:
+    wireguard:
+      rule: "Host(`vpn.stunthound.com`)"
+      entryPoints:
+        - websecure
+      service: wireguard
+      tls:
+        certResolver: cloudflare
+
+  services:
+    wireguard:
+      loadBalancer:
+        servers:
+          - url: "http://10.25.1.13:10086"
