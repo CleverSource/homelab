@@ -7,3 +7,5 @@ auto_discover_opts:
   delete: true
 
 external_secrets:
+  TRAEFIK_CF_DNS_API_TOKEN: op://Homelab/Cloudflare API Token/password
+  TRAEFIK_DASHBOARD_BASIC_AUTH: op://Homelab/Traefik Dashboard/htpasswd
