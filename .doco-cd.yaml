@@ -18,3 +18,6 @@ external_secrets:
 
   GRAFANA_ADMIN_USERNAME: op://Homelab/Grafana Admin/username
   GRAFANA_ADMIN_PASSWORD: op://Homelab/Grafana Admin/password
+
+  PVE_USERNAME: op://Homelab/Proxmox VE/username
+  PVE_PASSWORD: op://Homelab/Proxmox VE/password
