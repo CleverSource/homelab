@@ -11,6 +11,7 @@ services:
     volumes:
       - acme:/etc/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks: ["traefik"]
     ports:
       - name: web
         host_ip: 0.0.0.0
