@@ -1,0 +1,32 @@
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./provisioning:/etc/grafana/provisioning
+      - ./provisioning/dashboards/json:/var/lib/grafana/dashboards
+    networks:
+      - traefik
+      - monitoring
+    expose: ["3000"]
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`monitoring.stunthound.com`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=cloudflare"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+volumes:
+  grafana_data: {}
+
+networks:
+  traefik:
+    external: true
+  monitoring:
+    name: monitoring
+    driver: bridge

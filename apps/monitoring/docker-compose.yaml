@@ -6,54 +6,18 @@ configs:
         password: "${PVE_PASSWORD}"
         verify_ssl: false
 
-services:
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    restart: unless-stopped
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
-    networks: ["traefik"]
-    expose: ["9090"]
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.stunthound.com`)"
-      - "traefik.http.routers.prometheus.entrypoints=websecure"
-      - "traefik.http.routers.prometheus.tls.certresolver=cloudflare"
-      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
-  
+services:  
   pve-exporter:
     container_name: pve-exporter
     image: prompve/prometheus-pve-exporter
     restart: unless-stopped
-    networks: ["traefik"]
+    networks: ["monitoring"]
     expose: ["9221"]
     configs:
       - source: pve.yml
         target: /etc/prometheus/pve.yml
     command:
       - "--config.file=/etc/prometheus/pve.yml"
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: unless-stopped
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/provisioning/dashboards/json:/var/lib/grafana/dashboards
-    networks: ["traefik"]
-    expose: ["3000"]
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USERNAME}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`monitoring.stunthound.com`)"
-      - "traefik.http.routers.grafana.entrypoints=websecure"
-      - "traefik.http.routers.grafana.tls.certresolver=cloudflare"
-      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
   cadvisor:
     container_name: cadvisor
@@ -66,7 +30,7 @@ services:
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker:/var/lib/docker:ro
-    networks: ["traefik"]
+    networks: ["monitoring"]
     expose: ["8080"]
     command:
       - "--housekeeping_interval=30s"
@@ -77,7 +41,7 @@ services:
     image: prom/node-exporter:latest
     container_name: node-exporter
     restart: unless-stopped
-    networks: ["traefik"]
+    networks: ["monitoring"]
     expose: ["9100"]
     pid: host
     command:
@@ -92,10 +56,6 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
 
-volumes:
-  prometheus_data: {}
-  grafana_data: {}
-
 networks:
-  traefik:
+  monitoring:
     external: true
