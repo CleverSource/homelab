@@ -1,0 +1,42 @@
+---
+configs:
+  poll-config.yml:
+    content: |
+      - url: https://github.com/cleversource/homelab.git
+        reference: main
+        interval: 3600
+
+secrets:
+  1pw_token:
+    file: /root/.doco-cd/1pw_token
+
+volumes:
+  dococd_data: {}
+
+services:
+  app:
+    container_name: doco-cd
+    image: ghcr.io/kimdre/doco-cd:0.76.0@sha256:ef0df49fca5ccaa4c4e01e13bf99d15609c093dd08f53f0c94dacac2a72ed4bd
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dococd_data:/data
+    
+    secrets: ["1pw_token"]
+    configs:
+      - source: poll-config.yml
+        target: /poll-config.yml
+
+    environment:
+      TZ: America/New_York
+      LOG_LEVEL: info
+      POLL_CONFIG_FILE: /poll-config.yml
+      SECRET_PROVIDER: 1password
+      SECRET_PROVIDER_ACCESS_TOKEN_FILE: /run/secrets/1pw_token
+
+  healthcheck:
+    test: [CMD, /doco-cd, healthcheck]
+    start_period: 15s
+    interval: 30s
+    timeout: 5s
+    retries: 3
