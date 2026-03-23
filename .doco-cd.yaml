@@ -9,5 +9,9 @@ auto_discover_opts:
 external_secrets:
   TRAEFIK_CF_DNS_API_TOKEN: op://Homelab/Cloudflare API Token/password
   TRAEFIK_DASHBOARD_BASIC_AUTH: op://Homelab/Traefik Dashboard/htpasswd
+  
   DOZZLE_ADMIN_USERNAME: op://Homelab/Dozzle/username
   DOZZLE_ADMIN_PASSWORD: op://Homelab/Dozzle/password
+
+  PIHOLE_SYNC_PRIMARY: op://Homelab/Pi-hole Sync/primary
+  PIHOLE_SYNC_REPLICAS: op://Homelab/Pi-hole Sync/replicas
