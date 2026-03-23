@@ -1,0 +1,16 @@
+http:
+  routers:
+    unifi:
+      rule: "Host(`unifi.stunthound.com`)"
+      entryPoints:
+        - websecure
+      service: unifi
+      tls:
+        certResolver: cloudflare
+
+  services:
+    unifi:
+      loadBalancer:
+        servers:
+          - url: "https://10.25.1.4:11443"
+        serversTransport: insecureTransport
