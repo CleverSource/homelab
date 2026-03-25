@@ -2,6 +2,7 @@ services:
   pihole-sync:
     restart: unless-stopped
     image: ghcr.io/lovelaze/nebula-sync:latest
+    networks: ["traefik"]
     command:
       - run
     environment:
@@ -12,4 +13,6 @@ services:
       - API_ENABLED=true
       - PRIMARY=${PIHOLE_SYNC_PRIMARY}
       - REPLICAS=${PIHOLE_SYNC_REPLICAS}
-networks: {}
+networks:
+  traefik:
+    external: true
