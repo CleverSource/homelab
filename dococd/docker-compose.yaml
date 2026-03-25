@@ -4,7 +4,7 @@ configs:
     content: |
       - url: https://github.com/cleversource/homelab.git
         reference: main
-        interval: 600
+        interval: 7200
 
 secrets:
   1pw_token:
